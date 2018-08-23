@@ -1,47 +1,39 @@
-// OBJECT.PROTOTYPE
-// PERSON.PROTOTYPE
-
-function Person(firstName, lastName, dob) {
+// Person constructor
+function Person(firstName, lastName) {
   this.firstName = firstName;
   this.lastName = lastName;
-  this.birthday = new Date(dob);
-  // this.calculateAge = function() {
-  //   const diff = Date.now() - this.birthday.getTime();
-  //   const ageDate = new Date(diff);
-  //   return Math.abs(ageDate.getUTCFullYear() - 1970);
-  // }
 }
 
-// CALCULATE AGE
-Person.prototype.calculateAge = function() {
-  const diff = Date.now() - this.birthday.getTime();
-  const ageDate = new Date(diff);
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
+// Greeting
+Person.prototype.greeting = function() {
+  return `Hello ${this.firstName} ${this.lastName}`;
 }
 
-// GET FULL NAME
-Person.prototype.getFullName = function() {
-  return `${this.firstName} ${this.lastName}`;
+const person1 = new Person('Moneer', 'Alasmar');
+
+// console.log(person1.greeting());
+
+// Customer constructor
+function Customer(firstName, lastName, phone, memberShip) {
+  Person.call(this, firstName, lastName);
+  this.phone = phone;
+  this.memberShip = memberShip;
 }
 
-// GETS MARRIED
-Person.prototype.getsMarried = function(newLastName) {
-  this.lastName = newLastName;
+// Inherit the Person prototype methods
+Customer.prototype = Object.create(Person.prototype);
+
+// Make customer.prototype return Customer();
+Customer.prototype.constructor = Customer;
+
+// create customer
+const customer1 = new Customer('Meagan', 'Alasmar', '111-111-1111', 'standard');
+
+console.log(customer1);
+
+// Customer greeting
+Customer.prototype.greeting = function() {
+  return `Hello ${this.firstName} ${this.lastName} welcome to our company!`;
 }
 
-const moneer = new Person('Moneer', 'Alasmar', '12-6-86');
-const meagan = new Person('Meagan', 'Alasmar', '1-22-91');
-
-console.log(meagan);
-
-console.log(moneer.calculateAge());
-
-console.log(meagan.getFullName());
-
-meagan.getsMarried('Al-Asmar');
-
-console.log(meagan.getFullName());
-
-console.log(meagan.hasOwnProperty('firstName'));
-
-console.log(meagan.hasOwnProperty('getFullName'));
+console.log(customer1.greeting());
