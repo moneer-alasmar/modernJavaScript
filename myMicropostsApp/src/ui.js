@@ -8,6 +8,7 @@ class UI {
     this.forState = 'add';
   }
 
+  // SHOW ALL POSTS
   showPosts(posts) {
     let output = '';
     posts.forEach((post) => {
@@ -30,6 +31,7 @@ class UI {
     this.post.innerHTML = output;
   }
 
+  // SHOW ALERT MESSAGE
   showAlert(message, className) {
     this.clearAlert();
 
@@ -51,7 +53,7 @@ class UI {
       this.clearAlert();
     }, 3000);
   }
-
+  // CLEAR ALERT MESSAGES
   clearAlert() {
     const currentAlert = document.querySelector('.alert');
 
@@ -59,10 +61,17 @@ class UI {
       currentAlert.remove();
     }
   }
-
+  // CLEAR FIELDS
   clearFields() {
     this.titleInput.value = '';
     this.bodyInput.value = '';
+  }
+
+  // FILL FORM TO EDIT
+  fillForm(data) {
+    this.titleInput.value = data.title;
+    this.bodyInput.value = data.body;
+    this.idInput.value = data.id;
   }
 }
 

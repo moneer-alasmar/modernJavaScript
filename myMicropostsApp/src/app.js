@@ -10,6 +10,9 @@ document.querySelector('.post-submit').addEventListener('click', submitPost);
 // LISTEN FOR DELETE
 document.querySelector('#posts').addEventListener('click', deletePost);
 
+// LISTEN FOR EDIT STATE
+document.querySelector('#posts').addEventListener('click', enableEdit);
+
 // GET POSTS
 function getPosts() {
   http.get('http://localhost:3000/posts')
@@ -50,5 +53,25 @@ function deletePost(e) {
         .catch(err => console.log(err));
     }
   }
+  e.preventDefault();
+}
+
+// ENABLE EDIT STATE
+function enableEdit(e) {
+  if(e.target.parentElement.classList.contains('edit')){
+    const id = e.target.parentElement.dataset.id;
+    const title = e.target.parentElement.previousElementSibling.previousElementSibling.textContent;
+    const body = e.target.parentElement.previousElementSibling.textContent;
+
+    const data = {
+      id,
+      title,
+      body
+    }
+
+    // FILL FORM WITH CURRENT POST
+    ui.fillForm(data);
+  }
+
   e.preventDefault();
 }
